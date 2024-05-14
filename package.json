@@ -1,5 +1,6 @@
 {
   "name": "reading-books",
+  "type": "module",
   "version": "0.0.1",
   "scripts": {
     "start": "ts-node src/index.ts",
@@ -32,6 +33,7 @@
     "@types/supertest": "^6.0.2",
     "jest-mock-req-res": "^1.0.2",
     "supertest": "^7.0.0",
+    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
