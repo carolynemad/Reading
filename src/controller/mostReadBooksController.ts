@@ -7,13 +7,23 @@ const getMostReadBooks = async (res: Response) => {
 
   try {
     console.log("Fetching all reading intervals from the database");
-    const intervals = await ReadingInterval.find();
-    console.log(`Found ${intervals.length} reading intervals`);
+    const intervals: Array<{
+      userId: string;
+      bookId: string;
+      startPage: number;
+      endPage: number;
+    }> = await ReadingInterval.find();
+    if (!intervals || intervals.length === 0) {
+      console.log("No reading intervals found");
+      res.status(404).send({ error: "No reading intervals found" });
+      return;
+    }
+    console.log(`Found ${intervals?.length} reading intervals`);
 
-    const sortedBooks = mostReadBooksService.calculateMostReadBooks(intervals);
+    const sortedBooks = await mostReadBooksService.calculateMostReadBooks(intervals);
 
     console.log("Sending response with sorted books by pages read");
-    res.send(sortedBooks);
+    res.status(200).send(sortedBooks);
   } catch (error) {
     console.error("Error occurred while processing /most-read request:", error);
     res
