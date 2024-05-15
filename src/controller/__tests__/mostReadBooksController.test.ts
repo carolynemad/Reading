@@ -13,7 +13,6 @@ jest.mock("../../services/mostReadBooksService", () => ({
 }));
 
 jest.mock("mongoose", () => {
-  const actualMongoose = jest.requireActual("mongoose");
   class MockSchema {
     static Types = {
       ObjectId: "ObjectId",
@@ -30,18 +29,25 @@ jest.mock("mongoose", () => {
     { userId: "user2", bookId: "book1", startPage: 5, endPage: 15 },
     { userId: "user3", bookId: "book2", startPage: 1, endPage: 5 },
     { userId: "user4", bookId: "book2", startPage: 3, endPage: 7 },
-  ];
+  ] as Array<{
+    userId: string;
+    bookId: string;
+    startPage: number;
+    endPage: number;
+  }>;
+
   return {
-    ...actualMongoose,
+    Schema: MockSchema,
+    model: jest.fn().mockReturnValue({
+      find: jest.fn().mockResolvedValue(intervals),
+      findById: jest
+        .fn()
+        .mockResolvedValue({ title: "Title", numberOfPages: 206 }),
+      save: jest.fn().mockResolvedValue({}),
+      remove: jest.fn().mockResolvedValue({}),
+    }),
     connect: jest.fn(),
     disconnect: jest.fn(),
-    Schema: MockSchema,
-    model: jest.fn(() => ({
-      find: jest.fn().mockReturnValue(intervals),
-      findById: jest.fn(),
-      save: jest.fn(),
-      remove: jest.fn(),
-    })),
   };
 });
 

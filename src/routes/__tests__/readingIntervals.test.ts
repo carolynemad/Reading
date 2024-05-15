@@ -22,7 +22,9 @@ describe("readingIntervalRouter", () => {
     app.use(readingIntervalRouter);
     jest.clearAllMocks();
   });
-
+  afterEach(async () => {
+    jest.clearAllMocks(); 
+  });
   it("should call readingIntervalController.addReadingInterval when POST /add is called", async () => {
     const readingIntervalData = {
       userId: "user123",

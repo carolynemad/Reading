@@ -1,6 +1,9 @@
 import mostReadBooksService from "../mostReadBooksService";
 
 describe("mostReadBooksService", () => {
+  afterEach(async () => {
+    jest.clearAllMocks();
+  });
   it("should calculate most read books correctly", () => {
     const intervals: Array<{
       userId: string;

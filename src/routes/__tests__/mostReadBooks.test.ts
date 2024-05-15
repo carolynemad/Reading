@@ -27,11 +27,13 @@ describe("mostReadBooksRouter", () => {
 
   beforeEach(() => {
     app = express();
-    app.use(express.json()); 
+    app.use(express.json());
     app.use(mostReadBooksRouter);
     jest.clearAllMocks();
   });
-
+  afterEach(async () => {
+    jest.clearAllMocks();
+  });
   it("should call mostReadBooksController.getMostReadBooks when GET /most-read is called", async () => {
     await request(app)
       .get("/most-read")
