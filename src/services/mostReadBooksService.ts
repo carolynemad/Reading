@@ -1,4 +1,14 @@
-
+/**
+ * Given an array of intervals, calculates the most read books
+ * Service Layer
+ * @param {Array<{
+ *     userId: string;
+ *     bookId: string;
+ *     startPage: number;
+ *     endPage: number;
+ *   }>} intervals
+ * @returns {*}
+ */
 const calculateMostReadBooks = (
   intervals: Array<{
     userId: string;

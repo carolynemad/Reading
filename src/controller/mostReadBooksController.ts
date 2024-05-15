@@ -2,6 +2,13 @@ import { Request, Response } from "express";
 import { ReadingInterval } from "../models/ReadingInterval";
 import mostReadBooksService from "../services/mostReadBooksService";
 
+/**
+ * Fetches the intervals from the database and calculates the most read books
+ * Controller Layer
+ * @async
+ * @param {Response} res
+ * @returns {*}
+ */
 const getMostReadBooks = async (res: Response) => {
   console.log("Received request to /most-read");
 

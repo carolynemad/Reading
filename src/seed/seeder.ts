@@ -1,13 +1,18 @@
+import dotenv from "dotenv";
 import mongoose from "mongoose";
-import { ReadingInterval } from "../models/ReadingInterval";
-import { Book } from "../models/Book";
+import { ReadingInterval } from "../models/ReadingInterval.js";
+import { Book } from "../models/Book.js";
 import faker from "faker";
 
-/*
+dotenv.config();
+
+/**
 npx tsc
 node dist/seed/seeder.js
-*/
-
+ *
+ * @async
+ * @returns {*}
+ */
 async function seedData() {
   try {
     const mongoConnectionString = process.env.MONGO_CONNECTION_STRING;
@@ -18,15 +23,14 @@ async function seedData() {
       );
       process.exit(1);
     }
-    mongoose
-      .connect(mongoConnectionString, {})
-      .then(() => console.log("MongoDB connected"))
-      .catch((err) => console.log(err));
+
+    await mongoose.connect(mongoConnectionString, {});
+    console.log("MongoDB connected");
 
     await ReadingInterval.deleteMany({});
     await Book.deleteMany({});
 
-    const bookPromises = Array.from({ length: 300 }, () => {
+    const bookPromises = Array.from({ length: 100 }, () => {
       const title = faker.company.catchPhrase();
       const numberOfPages = faker.datatype.number({ min: 50, max: 500 });
 
@@ -35,7 +39,7 @@ async function seedData() {
     const books = await Promise.all(bookPromises);
     console.log("Books seeded successfully");
 
-    const readingIntervalPromises = Array.from({ length: 100 }, () => {
+    const readingIntervalPromises = Array.from({ length: 50 }, () => {
       const userId = faker.datatype.uuid();
       const book =
         books[faker.datatype.number({ min: 0, max: books.length - 1 })];

@@ -5,6 +5,14 @@ interface SMSProvider {
 }
 
 class MockySMSProvider implements SMSProvider {
+  /**
+   * Given a message and a phone number, it send a message to phone number
+   *Service Layer
+   * @async
+   * @param {string} phoneNumber
+   * @param {string} message
+   * @returns {Promise<void>}
+   */
   async sendSMS(phoneNumber: string, message: string): Promise<void> {
     try {
       await axios.post(
@@ -28,6 +36,14 @@ export class SMSService {
     this.smsProvider = new MockySMSProvider();
   }
 
+  /**
+   * Given a message and a phone number, it send a message to phone number
+   *Service Layer
+   * @async
+   * @param {string} phoneNumber
+   * @param {string} message
+   * @returns {Promise<void>}
+   */
   async sendSMS(phoneNumber: string, message: string): Promise<void> {
     console.log("Sending sms...");
     await this.smsProvider.sendSMS(phoneNumber, message);

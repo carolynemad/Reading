@@ -4,6 +4,14 @@ import { SMSService } from '../services/smsService';
 
 const smsService = new SMSService();
 
+/**
+ * Adds a reading interval on the database
+ * Controller Layer
+ * @async
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {*}
+ */
 const addReadingInterval = async (req: Request, res: Response) => {
   try {
     const { userId, bookId, startPage, endPage, phoneNumber } = req.body;
