@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  title: Koinz Test
+  description: API doc for the reading intervals and most-read books services.
+  version: 1.0.0
+
+paths:
+  /reading-intervals/add:
+    post:
+      summary: Creates a new reading interval.
+      tags:
+        - Reading Intervals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "d92fddca-701d-460a-b769-43407562478d"
+                bookId:
+                  type: string
+                  example: "59bea9dd-22c4-4f12-811f-60b9c3908937"
+                startPage:
+                  type: integer
+                  example: 5
+                endPage:
+                  type: integer
+                  example: 10
+              required:
+                - userId
+                - bookId
+                - startPage
+                - endPage
+      responses:
+        '201':
+          description: Successfully created the reading interval.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  intervalId:
+                    type: string
+                  userId:
+                    type: string
+                  bookId:
+                    type: string
+                  startPage:
+                    type: integer
+                  endPage:
+                    type: integer
+        '400':
+          description: The request was invalid or missing required fields.
+        '500':
+          description: A server error occurred.
+
+  /books/most-read:
+    get:
+      summary: Lists the books with the highest number of pages read.
+      tags:
+        - Most Read Books
+      responses:
+        '200':
+          description: Successfully retrieved the list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    bookId:
+                      type: string
+                    pagesRead:
+                      type: integer
+        '404':
+          description: No reading intervals found.
+        '500':
+          description: A server error occurred.
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - BearerAuth: []
+

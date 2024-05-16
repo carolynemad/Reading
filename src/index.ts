@@ -4,10 +4,15 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import readingIntervalsRoute from "./routes/readingIntervals";
 import mostReadBooksRoute from "./routes/mostReadBooks";
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 export const app = express();
 const port = process.env.PORT || 3000;
 dotenv.config();
+const swaggerDocument = YAML.load('swagger.yml');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Middleware
 app.use(bodyParser.json());
