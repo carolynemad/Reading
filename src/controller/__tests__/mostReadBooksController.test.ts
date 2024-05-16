@@ -62,7 +62,7 @@ describe("mostReadBooksController", () => {
     const statusMock = jest.fn().mockReturnThis();
     const res = { send: sendMock, status: statusMock } as unknown as Response;
 
-    await mostReadBooksController.getMostReadBooks(res);
+    await mostReadBooksController.getMostReadBooks({} as any, res);
 
     expect(mostReadBooksService.calculateMostReadBooks).toHaveBeenCalledTimes(
       1
@@ -83,7 +83,7 @@ describe("mostReadBooksController", () => {
       mostReadBooksService.calculateMostReadBooks as jest.Mock
     ).mockRejectedValueOnce(new Error("Test error"));
 
-    await mostReadBooksController.getMostReadBooks(res);
+    await mostReadBooksController.getMostReadBooks({} as any, res);
 
     expect(statusMock).toHaveBeenCalledWith(500);
     expect(sendMock).toHaveBeenCalledWith({

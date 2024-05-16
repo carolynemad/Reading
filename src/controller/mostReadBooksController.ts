@@ -9,7 +9,7 @@ import mostReadBooksService from "../services/mostReadBooksService";
  * @param {Response} res
  * @returns {*}
  */
-const getMostReadBooks = async (res: Response) => {
+const getMostReadBooks = async (req: Request, res: Response) => {
   console.log("Received request to /most-read");
 
   try {
@@ -27,7 +27,9 @@ const getMostReadBooks = async (res: Response) => {
     }
     console.log(`Found ${intervals?.length} reading intervals`);
 
-    const sortedBooks = await mostReadBooksService.calculateMostReadBooks(intervals);
+    const sortedBooks = await mostReadBooksService.calculateMostReadBooks(
+      intervals
+    );
 
     console.log("Sending response with sorted books by pages read");
     res.status(200).send(sortedBooks);
